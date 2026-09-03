@@ -1,7 +1,5 @@
 # ApplyAI - Intelligent Job Application Tracker
 
-A full-stack job search workspace that combines application tracking, intelligent task management, and AI-powered job analysis to help candidates make better decisions throughout the hiring process.
-
 **ApplyAI** is a production-oriented full-stack web application designed to centralize the modern job search into one workspace. It combines structured application management with AI-powered job description analysis, automated task generation, and analytics.
 
 Instead of treating AI as a simple chatbot, ApplyAI uses AI to **extract structured information from unstructured job postings and communications**, which can then be stored, analyzed, and used by deterministic application logic.
