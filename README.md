@@ -125,46 +125,29 @@ This makes the system easier to reason about, test, and extend.
 
 The analytics dashboard is designed to provide insight into the user's job search activity.
 
-Planned metrics include:
+Metrics include:
 
+* AI Summary 
 * Total applications
-* Applications by status
-* Applications by job type
 * Interview rate
-* Offer rate
-* Application activity over time
-* Upcoming deadlines
-* Priority distribution
-* AI match score distribution
+* Average time from application to interview
 
 ---
 
-### 📧 AI Email Parser
+### 📧 AI Resume Builder
 
-Planned functionality for extracting actionable information from hiring-related emails.
+AI-powered resume generation tailored to a selected job posting and the user's profile.
 
-The system will identify information such as:
+The system will:
 
-* Company
-* Position
-* Interview date
-* Online assessment deadline
-* Next action
-* Important instructions
-
-Example:
-
-```text
-Recruiter Email
-      ↓
-   AI Parser
-      ↓
-Structured Event
-      ↓
-Application
-      ↓
-Task / Deadline
-```
+* Select a saved job analysis
+* Use the user's profile, including education, skills, projects, and experience
+* Support multiple resume formats
+* Tailor resume content to the selected job
+* Optimize content for relevant skills and ATS keywords
+* Generate concise, one-page resume content
+* Maintain accuracy by using only information provided in the user's profile
+* Provide a download option as PDF
 
 ---
 
@@ -190,7 +173,7 @@ ApplyAI follows a full-stack architecture with a clear separation between the us
         │             │
         ↓             ↓
 ┌──────────────┐  ┌──────────────┐
-│ PostgreSQL   │  │   OpenAI API │
+│ PostgreSQL   │  │   Gemini API │
 │              │  │              │
 │ Prisma ORM   │  │ AI Analysis  │
 └──────────────┘  └──────────────┘
@@ -218,7 +201,7 @@ ApplyAI follows a full-stack architecture with a clear separation between the us
 
 ### AI
 
-* OpenAI API
+* Google Gemeni API
 * Structured JSON outputs
 * Prompt engineering
 * LLM-based information extraction
