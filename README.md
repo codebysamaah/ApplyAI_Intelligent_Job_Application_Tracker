@@ -122,36 +122,6 @@ AUTH_SECRET
 
 Vercel will automatically build and deploy the Next.js application when connected to the GitHub repository.
 
-## Project Structure
-
-```text
-app/
-├── api/
-│   ├── applications/
-│   ├── auth/
-│   ├── dashboard/
-│   ├── profile/
-│   ├── resume-builder/
-│   ├── tasks/
-│   └── ...
-├── applications/
-├── profile/
-└── ...
-
-components/
-lib/
-├── auth.ts
-└── prisma.ts
-
-prisma/
-└── schema.prisma
-
-public/
-Dockerfile
-next.config.ts
-package.json
-```
-
 ## Security
 
 * Passwords are hashed using bcrypt.
@@ -167,7 +137,3 @@ package.json
 * More detailed job-search analytics
 * Resume export and formatting improvements
 * Additional AI models and providers
-
-## License
-
-This project is for educational and portfolio purposes.
