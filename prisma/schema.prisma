@@ -1,0 +1,249 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  passwordHash String
+
+  profile      Profile?
+  applications Application[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Profile {
+  id Int @id @default(autoincrement())
+
+  userid Int @unique
+
+  // Personal Information
+  name         String
+  email        String
+  phone        String?
+  location     String?
+  linkedinUrl  String?
+  githubUrl    String?
+  portfolioUrl String?
+
+  user User @relation(fields: [userid], references: [id], onDelete: Cascade)
+
+  education      Education[]
+  skills         Skill[]
+  projects       Project[]
+  experiences    Experience[]
+  certifications Certification[]
+  achievements   Achievement[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Education {
+  id        Int @id @default(autoincrement())
+  profileId Int
+
+  school         String
+  degree         String
+  fieldOfStudy   String?
+  gpa            Float?
+  graduationDate DateTime?
+  location       String?
+
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Skill {
+  id        Int @id @default(autoincrement())
+  profileId Int
+
+  name     String
+  category String?
+
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+}
+
+model Project {
+  id        Int @id @default(autoincrement())
+  profileId Int
+
+  name         String
+  description  String?
+  technologies String[]
+  bulletPoints String[]
+  githubUrl    String?
+  demoUrl      String?
+
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Experience {
+  id        Int @id @default(autoincrement())
+  profileId Int
+
+  company      String
+  position     String
+  location     String?
+  startDate    DateTime
+  endDate      DateTime?
+  bulletPoints String[]
+
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Certification {
+  id        Int @id @default(autoincrement())
+  profileId Int
+
+  name           String
+  issuer         String?
+  issueDate      DateTime?
+  expirationDate DateTime?
+  credentialUrl  String?
+
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Achievement {
+  id        Int @id @default(autoincrement())
+  profileId Int
+
+  title       String
+  description String?
+  date        DateTime?
+
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Application {
+  id              Int       @id @default(autoincrement())
+  userid          Int 
+
+  company         String
+  jobTitle        String
+  jobType         JobType   @default(FULL_TIME)
+  status          Status    @default(SAVED)
+  applicationDate DateTime?
+  deadline        DateTime?
+  jobUrl          String?
+  location        String?
+  salary          String?
+  notes           String?
+  priority        Priority  @default(MEDIUM)
+
+  user User @relation(fields: [userid], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  jobAnalysis   JobAnalysis?
+  tasks         Task[]
+  statusHistory ApplicationStatusHistory[]
+}
+
+model ApplicationStatusHistory {
+  id            Int      @id @default(autoincrement())
+  applicationId Int
+  status        Status
+  changedAt     DateTime @default(now())
+
+  application Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+}
+
+model JobAnalysis {
+  id                     Int     @id @default(autoincrement())
+  applicationId          Int     @unique
+  description            String
+
+  requiredSkills         Json?
+  preferredSkills        Json?
+  programmingLanguages   Json?
+  experienceRequirements String?
+  location               String?
+  salary                 String?
+  responsibilities       Json?
+
+  matchScore             Int?
+  matchedSkills          Json?
+  partialMatches         Json?
+  missingSkills          Json?
+  matchedRequirements    Json?
+  missingRequirements    Json?
+  strengths              Json?
+  recommendations        Json?
+  recommendation         String?
+
+  application Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Task {
+  id            Int        @id @default(autoincrement())
+  applicationId Int
+  title         String
+  description   String?
+  dueDate       DateTime?
+  priority      Priority   @default(MEDIUM)
+  completed     Boolean    @default(false)
+  source        TaskSource @default(MANUAL)
+
+  application Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum JobType {
+  FULL_TIME
+  PART_TIME
+  INTERNSHIP
+  COOP
+  CONTRACT
+  OTHER
+}
+
+enum Status {
+  SAVED
+  APPLIED
+  OA
+  INTERVIEW
+  OFFER
+  REJECTED
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum TaskSource {
+  MANUAL
+  SYSTEM
+}

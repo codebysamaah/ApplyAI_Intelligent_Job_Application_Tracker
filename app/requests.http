@@ -1,0 +1,25 @@
+POST http://localhost:3000/api/applications
+Content-Type: application/json
+
+{
+  "company": "Google",
+  "jobTitle": "Full Stack Developer",
+  "jobType": "FULL_TIME",
+  "status": "APPLIED",
+  "jobUrl": "https://google.com/job",
+  "location": "Waterloo, ON",
+  "priority": "MEDIUM",
+  "notes": "Interesting web development role"
+}
+
+
+PATCH http://localhost:3000/api/applications/1
+Content-Type: application/json
+
+{
+  "company": "Amazon",
+  "jobTitle": "Software Engineer",
+  "jobType": "INTERNSHIP"
+}
+
+DELETE http://localhost:3000/api/applications/2
