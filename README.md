@@ -32,6 +32,7 @@ ApplyAI is an AI-powered job application tracker designed to help users organize
 ### AI / Machine Learning
 
 * Google Gemini API
+* Prompt Engineering
 * LLM-powered job analysis
 * Resume generation
 * Skill matching and gap analysis
