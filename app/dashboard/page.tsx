@@ -73,8 +73,6 @@ type Analytics = {
 
   interviewApplications: number;
   respondedApplications: number;
-
-  aiSummary: string;
 };
 
 function formatStatus(status: Application["status"]) {
@@ -501,53 +499,20 @@ const filteredApplications = useMemo(() => {
               {analyticsLoading ? (
                 <div className="h-48 animate-pulse rounded-2xl border border-gray-200 bg-white" />
               ) : analytics ? (
-                <div className="relative overflow-hidden rounded-2xl border border-violet-200/70 bg-gradient-to-br from-white via-white to-violet-50/60 shadow-sm">
-
-                  {/* AI ambient glow */}
-                  <div className="pointer-events-none absolute -right-20 -top-24 h-56 w-56 rounded-full bg-violet-300/20 blur-3xl" />
-                  <div className="pointer-events-none absolute right-1/4 top-0 h-32 w-32 rounded-full bg-indigo-200/20 blur-3xl" />
-
-                  {/* AI Header */}
-                  <div className="relative border-b border-violet-100/80 px-5 py-4">
-                    <div className="flex items-start gap-3">
-
-                      {/* AI Icon */}
-                      <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600 via-indigo-600 to-blue-600 text-white shadow-md shadow-violet-200">
-                        <span className="text-base">✦</span>
-
-                        {/* Small sparkle */}
-                        <span className="absolute -right-1 -top-1 text-[9px] text-violet-400">
-                          ✦
-                        </span>
-                      </div>
-
-                      <div className="min-w-0 flex-1">
-                        <div className="flex flex-wrap items-center gap-2">
-
-                          <h2 className="text-sm font-semibold tracking-tight text-gray-900">
-                            Job Search Insights
-                          </h2>
-
-                          {/* AI Badge */}
-                          <span className="inline-flex items-center gap-1.5 rounded-full border border-violet-200 bg-violet-50 px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-violet-600">
-                            <span className="h-1.5 w-1.5 rounded-full bg-violet-500 shadow-sm shadow-violet-300" />
-                            AI Powered
-                          </span>
-
-                          <span className="text-[10px] text-gray-400">
-                            • This month
-                          </span>
-                        </div>
-
-                        <p className="mt-1.5 max-w-4xl text-xs leading-5 text-gray-500">
-                          {analytics.aiSummary}
-                        </p>
-                      </div>
+                <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+                  <div className="border-b border-slate-100 px-5 py-4">
+                    <div className="flex items-center justify-between gap-2">
+                      <h2 className="text-sm font-semibold tracking-tight text-gray-900">
+                        Job Search Analytics
+                      </h2>
+                      <span className="text-[10px] text-gray-400">
+                        This month
+                      </span>
                     </div>
                   </div>
 
                   {/* Metrics */}
-                  <div className="relative grid grid-cols-2 sm:grid-cols-4">
+                  <div className="grid grid-cols-2 sm:grid-cols-4">
 
                     <AnalyticsMetric
                       label="Applications"
@@ -578,9 +543,6 @@ const filteredApplications = useMemo(() => {
                     />
 
                   </div>
-
-                  {/* AI footer accent */}
-                  <div className="h-[2px] w-full bg-gradient-to-r from-violet-500 via-indigo-500 to-blue-500 opacity-70" />
                 </div>
               ) : null}
             </section>

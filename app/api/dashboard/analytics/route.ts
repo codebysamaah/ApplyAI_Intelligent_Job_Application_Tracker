@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { GoogleGenAI } from "@google/genai";
 import { prisma } from "@/lib/prisma";
 import { getCurrentUserId } from "@/lib/auth";
 
@@ -175,84 +174,6 @@ export async function GET() {
           ) / 10
         : null;
 
-    // ----------------------------------------
-    // ALL ANALYTICS HAVE NOW BEEN CALCULATED
-    // ----------------------------------------
-
-    const analytics = {
-      applicationsThisMonth,
-      responseRate,
-      interviewRate,
-      averageApplicationToInterview,
-      statusBreakdown,
-      topCompanies,
-      topRoles,
-      interviewApplications: interviewApplications.length,
-      respondedApplications: respondedApplications.length,
-    };
-
-    // ----------------------------------------
-    // GEMINI ONLY INTERPRETS THE ANALYTICS
-    // ----------------------------------------
-
-    let aiSummary =
-      "AI summary is currently unavailable.";
-
-    const apiKey = process.env.GEMINI_API_KEY;
-
-    if (apiKey) {
-      try {
-        const ai = new GoogleGenAI({
-          apiKey,
-        });
-
-        const prompt = `
-You are an AI career assistant helping a user analyze their job search.
-
-Below are statistics that have already been calculated by the application.
-Do NOT recalculate, modify, or invent any numbers.
-
-Analytics:
-${JSON.stringify(analytics, null, 2)}
-
-Provide a concise and useful summary of the user's job search.
-
-Focus on:
-- How active their job search is
-- Their response and interview rates
-- Their current application pipeline
-- Any notable patterns in companies or roles
-- Their average time to interview if available
-- One practical recommendation
-
-Keep the response between 80 and 120 words.
-
-Be encouraging but honest.
-Do not mention that you are an AI.
-Do not use markdown headings.
-Do not use bullet points.
-`;
-
-        const response = await ai.models.generateContent({
-          model: "gemini-3.6-flash",
-          contents: prompt,
-          config: {
-            temperature: 0.4,
-            maxOutputTokens: 200,
-          },
-        });
-
-        if (response.text) {
-          aiSummary = response.text.trim();
-        }
-      } catch (aiError) {
-        console.error("Failed to generate AI summary:", aiError);
-
-        aiSummary =
-          "Your application activity is being analyzed. Check back for personalized insights.";
-      }
-    }
-
     return NextResponse.json({
       success: true,
 
@@ -279,8 +200,6 @@ Do not use bullet points.
       interviewApplications: interviewApplications.length,
 
       respondedApplications: respondedApplications.length,
-
-      aiSummary,
     });
   } catch (error) {
     console.error("Failed to calculate dashboard analytics:", error);
