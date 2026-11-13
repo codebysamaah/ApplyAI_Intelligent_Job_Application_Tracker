@@ -403,7 +403,7 @@ export default function ApplicationDetailsPage() {
       <div className="min-h-screen bg-slate-50 p-8">
         <div className="mx-auto max-w-6xl">
           <button
-            onClick={() => router.push("/")}
+            onClick={() => router.push("/dashboard")}
             className="mb-6 text-sm font-semibold text-indigo-600 hover:text-indigo-700"
           >
             ← Back to Dashboard
@@ -435,7 +435,7 @@ export default function ApplicationDetailsPage() {
         {/* Header */}
         <div className="mb-8">
           <button
-            onClick={() => router.push("/")}
+            onClick={() => router.push("/dashboard")}
             className="mb-6 text-sm font-semibold text-slate-500 hover:text-indigo-600"
           >
             ← Back to Dashboard
