@@ -122,6 +122,15 @@ AUTH_SECRET
 
 Vercel will automatically build and deploy the Next.js application when connected to the GitHub repository.
 
+## Live Demo
+
+[Try ApplyAI here](https://apply-ai-intelligent-job-applicatio.vercel.app/)
+
+### Testing Credentials
+Use the following credentials to explore the application with preloaded data, or create your own account to get started:
+- Email: johndoe@gmail.com
+- Password: 12345678
+
 ## Security
 
 * Passwords are hashed using bcrypt.
