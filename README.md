@@ -124,7 +124,7 @@ Vercel will automatically build and deploy the Next.js application when connecte
 
 ## Live Demo
 
-[Try ApplyAI here](apply-ai-intelligent-job-applicatio.vercel.app)
+[Try ApplyAI here](https://apply-ai-intelligent-job-applicatio.vercel.app/)
 
 ### Testing Credentials
 Use the following credentials to explore the application:
