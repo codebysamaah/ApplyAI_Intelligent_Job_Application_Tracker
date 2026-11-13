@@ -1,5 +1,7 @@
 # ApplyAI – Intelligent Job Application Tracker
 
+## Description
+
 ApplyAI is an AI-powered job application tracker designed to help users organize applications, analyze job postings, identify skill gaps, and generate tailored resumes.
 
 ## Features
