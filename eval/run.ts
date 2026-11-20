@@ -1,7 +1,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { GoogleGenAI } from "@google/genai";
-import { extractJobSkills } from "../lib/job-skill-extraction.ts";
+import { extractJobSkills } from "../lib/job-skill-extraction";
 
 type Posting = {
   id: string;
