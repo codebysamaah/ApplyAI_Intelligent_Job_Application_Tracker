@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate && next build",
+    "eval:skills": "node --env-file-if-exists=.env.local --experimental-strip-types eval/run.ts",
     "start": "next start",
     "lint": "eslint",
     "postinstall": "prisma skills sync || exit 0"
