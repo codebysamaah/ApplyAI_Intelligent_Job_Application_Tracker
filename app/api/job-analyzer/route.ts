@@ -1,11 +1,10 @@
 import { NextResponse } from "next/server";
-import { GoogleGenAI } from "@google/genai";
 import { prisma } from "@/lib/prisma";
 import { getCurrentUserId } from "@/lib/auth";
+import { GoogleGenAI } from "@google/genai";
+import { extractJobSkills } from "@/lib/job-skill-extraction";
 
-const ai = new GoogleGenAI({
-  apiKey: process.env.GEMINI_API_KEY,
-});
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 export async function POST(request: Request) {
   try {
@@ -94,56 +93,12 @@ export async function POST(request: Request) {
      * ---------------------------------------------------------
      */
 
-    const analysisPrompt = `
-You are a job description analyzer for a job application tracking application.
-
-Analyze the provided job description and extract ONLY information explicitly
-supported by the job posting.
-
-Return ONLY valid JSON with exactly these fields:
-
-{
-  "requiredSkills": string[],
-  "preferredSkills": string[],
-  "programmingLanguages": string[],
-  "experienceRequirements": string,
-  "location": string,
-  "salary": string,
-  "responsibilities": string[]
-}
-
-Rules:
-- Do not invent information.
-- Keep skills concise and normalized.
-- Separate required skills from preferred/nice-to-have skills.
-- Programming languages should contain ONLY programming languages explicitly
-  mentioned in the posting.
-- If information is not provided, return an empty string or empty array.
-- Responsibilities should contain concise summaries of the major responsibilities.
-- Do not include markdown.
-- Do not include explanations outside the JSON object.
-
-Company:
-${company || "Not provided"}
-
-Job Title:
-${jobTitle || "Not provided"}
-
-Job Description:
-${cleanDescription}
-`;
-
-    const analysisResponse = await ai.models.generateContent({
-      model: "gemini-3.6-flash",
-      contents: analysisPrompt,
-      config: {
-        responseMimeType: "application/json",
-      },
+    const skillAnalysis = await extractJobSkills(ai, {
+      company,
+      jobTitle,
+      description: cleanDescription,
     });
-
-    const analysis = JSON.parse(
-      analysisResponse.text || "{}"
-    );
+    const analysis = skillAnalysis;
 
     /*
      * ---------------------------------------------------------
